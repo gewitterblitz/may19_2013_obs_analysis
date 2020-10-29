@@ -10,7 +10,16 @@ Date created: May 17, 2020
 from datetime import datetime, timedelta
 import numpy as np
 
-
+def time2sec(f):
+    date_start = datetime.strptime(f"{f.split('/')[-1].split('_')[2]}", "%H%M%S")
+    interval_left = timedelta(
+        hours=date_start.hour, minutes=date_start.minute, seconds=date_start.second
+    ).total_seconds()
+    for i in range(600):
+        interval_right = interval_left + 60
+        yield [interval_left, interval_right]
+        interval_left = interval_right
+        
 def extent_of_interest(*args):
     """
 
@@ -114,6 +123,85 @@ def extent_of_interest(*args):
         ll_lat = 35.62
         ul_lat = 36.1
 
+    return ll_lon, ul_lon, ll_lat, ul_lat
+
+
+def bbox_lma_data(d):
+    if (d >= 200000) & (d < 201000):
+        ll_lon = -98.1
+        ul_lon = -97.6
+        ll_lat = 35.35
+        ul_lat = 35.8
+    if (d >= 201000) & (d < 202000):
+        ll_lon = -98
+        ul_lon = -97.3
+        ll_lat = 35.35
+        ul_lat = 35.8
+    if (d >= 202000) & (d < 203000):
+        ll_lon = -98
+        ul_lon = -97.3
+        ll_lat = 35.35
+        ul_lat = 35.8
+    if (d >= 203000) & (d < 204000):
+        ll_lon = -97.9
+        ul_lon = -97.2
+        ll_lat = 35.4
+        ul_lat = 35.9
+    if (d >= 204000) & (d < 205000):
+        ll_lon = -97.8
+        ul_lon = -97.1
+        ll_lat = 35.4
+        ul_lat = 36
+    if (d >= 205000) & (d < 210000):
+        ll_lon = -97.75
+        ul_lon = -97.1
+        ll_lat = 35.45
+        ul_lat = 36
+    if (d >= 210000) & (d < 211000):
+        ll_lon = -97.8
+        ul_lon = -97
+        ll_lat = 35.4
+        ul_lat = 36
+    if (d >= 211000) & (d < 212000):
+        ll_lon = -97.7
+        ul_lon = -96.8
+        ll_lat = 35.5
+        ul_lat = 36
+    if (d >= 212000) & (d < 213000):
+        ll_lon = -97.6
+        ul_lon = -96.8
+        ll_lat = 35.5
+        ul_lat = 36
+    if (d >= 213000) & (d < 214000):
+        ll_lon = -97.6
+        ul_lon = -96.8
+        ll_lat = 35.5
+        ul_lat = 36.1
+    if (d >= 214000) & (d < 215000):
+        ll_lon = -97.5
+        ul_lon = -96.6
+        ll_lat = 35.5
+        ul_lat = 36.2
+    if (d >= 215000) & (d < 220000):
+        ll_lon = -97.4
+        ul_lon = -96.6
+        ll_lat = 35.55
+        ul_lat = 36.1
+    if (d >= 220000) & (d < 221000):
+        ll_lon = -97.15
+        ul_lon = -96.6
+        ll_lat = 35.62
+        ul_lat = 36.1
+    if (d >= 221000) & (d < 222000):
+        ll_lon = -97.25
+        ul_lon = -96.75
+        ll_lat = 35.63
+        ul_lat = 36.1
+    if (d >= 222000) & (d < 223000):
+        ll_lon = -97
+        ul_lon = -96.5
+        ll_lat = 35.62
+        ul_lat = 36.1
     return ll_lon, ul_lon, ll_lat, ul_lat
 
 
