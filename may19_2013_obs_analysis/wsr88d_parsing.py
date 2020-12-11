@@ -13,6 +13,7 @@ import xarray as xr
 from math import sin, cos, sqrt, atan2, radians
 from skewt import SkewT
 from dateutil.parser import parse
+from may19_2013_obs_analysis.utils import scan_vol_time,sec2time,ceil,grab_time_intervals
 
 
 def get_xarray_dataset(self, field):

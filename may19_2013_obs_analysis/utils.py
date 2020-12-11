@@ -7,6 +7,9 @@ parsing lma and wsr88D data files for my May 19, 2013 observational analysis
 Date created: Nov 17, 2020 
 """
 
+from datetime import datetime,timedelta
+import numpy as np
+
 def extent_of_interest(*args):
     """
 
@@ -276,3 +279,42 @@ def grab_time_intervals(radar):
             sec2time(interval_right2)[0:8], '%H:%M:%S')
 
         return final_left1, final_left2, final_right1, final_right2
+    
+    
+# Source:https://github.com/nguy/PyRadarMet/blob/master/pyradarmet/geometry.py
+
+earth_radius = 6371000 # Earth's average radius [m] assuming sphericity
+r43 = earth_radius * 4./3. # 4/3 Approximation effective radius for standard atmosphere [m]
+
+def ray_height(r, elev, h0, reff=r43):
+    """
+    Center of radar beam height [m] calculation.
+    Rinehart (1997), Eqn 3.12, Bech et al. (2003) Eqn 3
+    Parameters
+    ----------
+    r : float or array
+        Range from radar to point of interest [m]
+    elev : float
+        Elevation angle of radar beam [deg]
+    h0 : float
+        Height of radar antenna [m]
+    reff : float
+        Effective radius
+    
+    Returns
+    --------
+    h : height of center of radar beam above the ground at that range
+    
+    Notes
+    -----
+    If no Effective radius is given a "standard atmosphere" is assumed,
+    the 4/3 approximation.
+    Bech et al. (2003) use a factor ke that is the ratio of earth's radius
+    to the effective radius (see r_effective function) and Eqn 4 in B03
+    """
+    # Convert earth's radius to km for common dN/dH values and then
+    # multiply by 1000 to return radius in meters
+    term1 = (np.sqrt(np.asarray(r)**2 +reff**2 +
+             2 * np.asarray(r) * reff * np.sin(np.deg2rad(elev))))
+    h = term1 - reff + h0
+    return h

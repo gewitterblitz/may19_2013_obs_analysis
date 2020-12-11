@@ -176,3 +176,47 @@ def plot_flash_zdr(flash_dataset, segmented_files, times, zdr_df, cmap=None, cba
 
         except KeyError as error:  # happens when  obj_pounds is empty (zero entries) i.e. no ZDR objects to identify in our data
             continue
+            
+            
+def zdr_col_bbox_facet(seg_file, dt, zdr_df):
+
+    cell_seg_reader = io.imread(seg_file)
+    cell_seg = cell_seg_reader
+    seg = label(cell_seg)
+    seg = np.fliplr(seg)
+
+    try:
+        obj_bounds = pd.DataFrame(zdr_df.loc[dt])
+        
+        if len(obj_bounds.columns) == 1:
+            obj = obj_bounds.transpose()
+            rect = patches.Rectangle(
+                                    (obj["bbox-2"][0], obj["bbox-1"][0]),
+                                    obj["bbox-5"][0] - obj["bbox-2"][0],
+                                    obj["bbox-4"][0] - obj["bbox-1"][0],
+                                    linewidth=1,
+                                    edgecolor="r",
+                                    facecolor="none",
+                                )
+    
+            return seg[0, :, :],[rect],[obj]
+        
+        elif len(obj_bounds.columns) > 1:
+            rects = []
+            objs = []
+            for j in range(len(obj_bounds)):
+                obj = pd.DataFrame(obj_bounds.iloc[j]).transpose()
+                rect = patches.Rectangle(
+                    (obj["bbox-2"][0], obj["bbox-1"][0]),
+                    obj["bbox-5"][0] - obj["bbox-2"][0],
+                    obj["bbox-4"][0] - obj["bbox-1"][0],
+                    linewidth=1,
+                    edgecolor="r",
+                    facecolor="none",
+                )
+                rects.append(rect)
+                objs.append(obj)
+            return seg[0, :, :],rects,objs
+    
+    except KeyError as error:
+        pass
