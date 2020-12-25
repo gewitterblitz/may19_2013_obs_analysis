@@ -5,7 +5,7 @@ May19_2013_obs_analysis
 [![License:BSD-3-Clause](https://img.shields.io/badge/License-BSD%203--Clause-lightgray.svg?style=flt-square)](https://opensource.org/licenses/BSD-3-Clause)
 
 
-This repository contains all python scripts necessary to produce figures for Sharma et al. (2020) published in AMS Monthly Weather Review
+This repository contains all python scripts necessary to produce figures for Sharma et al. (2021) submitted to AMS Monthly Weather Review
 
 --------
 
