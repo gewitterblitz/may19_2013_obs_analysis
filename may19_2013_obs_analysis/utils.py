@@ -318,3 +318,23 @@ def ray_height(r, elev, h0, reff=r43):
              2 * np.asarray(r) * reff * np.sin(np.deg2rad(elev))))
     h = term1 - reff + h0
     return h
+
+def my_annotate(
+    ax, s, xy_arr=[], *args, **kwargs
+):  # code taken from https://stackoverflow.com/a/14545981/12538451
+    ans = []
+    an = ax.annotate(s, xy_arr[0], *args, **kwargs)
+    ans.append(an)
+    d = {}
+    try:
+        d["xycoords"] = kwargs["xycoords"]
+    except KeyError:
+        pass
+    try:
+        d["arrowprops"] = kwargs["arrowprops"]
+    except KeyError:
+        pass
+    for xy in xy_arr[1:]:
+        an = ax.annotate(s, xy, alpha=0.0, xytext=(0, 0), textcoords=an, **d)
+        ans.append(an)
+    return ans
