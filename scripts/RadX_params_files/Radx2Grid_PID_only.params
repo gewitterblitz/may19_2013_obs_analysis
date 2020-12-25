@@ -74,7 +74,7 @@ debug = DEBUG_OFF;
 // Type: string
 //
 
-input_dir = "/Users/ms/Desktop/RadxPid_KTLX_May192013/cfradial_pyart_converted";
+input_dir = "./PID_polar/";
 
 ///////////// mode ////////////////////////////////////
 //
@@ -352,7 +352,7 @@ beam_width_fraction_for_data_limit_extension = 0.5;
 //
 
 grid_z_geom = {
-    nz = 20,
+    nz = 40,
     minz = 0.5,
     dz = 0.5
 };
