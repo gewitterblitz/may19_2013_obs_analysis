@@ -9,6 +9,56 @@ Date created: Nov 17, 2020
 
 from datetime import datetime,timedelta
 import numpy as np
+import cartopy.geodesic as geod
+import cartopy.crs as ccrs
+from descartes import PolygonPatch
+import matplotlib.pyplot as plt
+import os
+
+# ------------------------------------------------------------------------------------------------------------------
+
+# This function was adapted from https://stackoverflow.com/a/48259752
+# It is meant to create a circle around a lat-lon pair with correct projected coordinates
+
+def coordXform(orig_crs, target_crs, x, y):
+    """
+    Converts array of (y,x) from orig_crs -> target_crs
+    y, x: numpy array of float values
+    orig_crs: source CRS
+    target_crs: target CRS
+    """
+
+    # original code is one-liner
+    # it leaves an open axes that need to plt.close() later
+    # return plt.axes( projection = target_crs ).projection.transform_points( orig_crs, x, y )
+
+    # new improved code follows
+    xys = plt.axes( projection = target_crs ).projection.transform_points( orig_crs, x, y )
+    # print(plt.gca())  # current axes: GeoAxes: _EPSGProjection(3857)
+    plt.close()         # Kill GeoAxes
+    # print(plt.gca())  # AxesSubplot (new current axes)
+    return xys
+
+
+# This function converts the lat lon coordinates for geodesic circle obtained from
+# coordXform function to the desired projection
+
+def transformed_coords(target_crs,lat=None,lon=None,radius=None):
+    proj = target_crs
+    
+    # define an ellipsoid on which to solve geodesic problems
+    g1 = geod.Geodesic()
+    
+    # find a geodesic circle of given radius at a given point
+    x = g1.circle(lon=lon,lat=lat,radius=radius)
+    
+    # Transform geographic (lon-lat) to (x, y) of your desired projection
+    xys = coordXform(ccrs.PlateCarree(),proj,np.asarray(x)[:,0], np.asarray(x)[:,1])
+    
+    # return only 2D plane coordinates
+    return xys[:,:2]
+
+# ------------------------------------------------------------------------------------------------------------------
 
 def extent_of_interest(*args):
     """
