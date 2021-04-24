@@ -7,7 +7,7 @@ May19_2013_obs_analysis
 [![DOI](https://zenodo.org/badge/307588157.svg)](https://zenodo.org/badge/latestdoi/307588157)
 
 
-This repository contains all python scripts necessary to produce figures for Sharma et al. (2021) submitted to AMS Monthly Weather Review
+This repository contains all python scripts necessary to produce figures for [Sharma et al. (2021)](https://journals.ametsoc.org/view/journals/mwre/aop/MWR-D-20-0280.1/MWR-D-20-0280.1.xml)
 
 --------
 
